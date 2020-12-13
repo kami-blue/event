@@ -3,7 +3,7 @@ package org.kamiblue.event.eventbus
 /**
  * Event bus that allow subscribing another [IEventBus] to it
  */
-interface IMultiEventBus {
+interface IMultiEventBus : IEventBus {
     /**
      * Subscribe an [eventBus] to this event bus
      */

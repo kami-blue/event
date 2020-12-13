@@ -1,9 +1,31 @@
 package org.kamiblue.event.eventbus
 
+import org.kamiblue.event.listener.Listener
+
 /**
  * The basic Interface for an event bus
  */
 interface IEventBus {
+
+    /**
+     * A map for subscribed objects and their listeners
+     *
+     * <SubscribedObject, Set<Listener>>
+     */
+    val subscribedObjects: MutableMap<Any, MutableSet<Listener<*>>>
+
+    /**
+     * A map for events and their subscribed listeners
+     *
+     * <Event, Set<Listener>>
+     */
+    val subscribedListeners: MutableMap<Class<*>, MutableSet<Listener<*>>>
+
+    /**
+     * Called when putting a new set to the map
+     */
+    val newSet: MutableSet<Listener<*>>
+
     /**
      * Subscribes all [objects]' listeners to this event bus
      */
