@@ -1,17 +1,14 @@
 package org.kamiblue.event.eventbus
 
-import io.netty.util.internal.ConcurrentSet
-import me.zeroeightsix.kami.util.event.EventBus
 import org.kamiblue.event.listener.Listener
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentSkipListSet
 
-
 /**
  * A concurrent implementation of [AbstractEventBus]
  */
-open class EventBusImpl : AbstractEventBus() {
+open class ConcurrentEventBus : AbstractEventBus() {
     final override val subscribedObjects = ConcurrentHashMap<Any, MutableSet<Listener<*>>>()
     final override val subscribedListeners = ConcurrentHashMap<Class<*>, MutableSet<Listener<*>>>()
     final override val newSet get() = ConcurrentSkipListSet<Listener<*>>(Comparator.reverseOrder())
@@ -20,8 +17,8 @@ open class EventBusImpl : AbstractEventBus() {
 /**
  * A concurrent implementation of [AbstractEventBus] and [IMultiEventBus]
  */
-open class MasterEventBus : EventBus.ConcurrentEventBus(), IMultiEventBus {
-    private val subscribedEventBus = ConcurrentSet<IEventBus>()
+open class MasterEventBus : ConcurrentEventBus(), IMultiEventBus {
+    private val subscribedEventBus = Collections.newSetFromMap<IEventBus>(ConcurrentHashMap())
 
     final override fun subscribe(eventBus: IEventBus) {
         subscribedEventBus.add(eventBus)
