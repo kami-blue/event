@@ -1,13 +1,16 @@
 package org.kamiblue.event
 
-import me.zeroeightsix.kami.util.event.Listener.Companion.DEFAULT_PRIORITY
-
 /**
  * Listener for event listening
  *
  * @param function action to perform when this listener gets called by the event bus
  */
-class Listener<T : Any>(val event: Class<T>, val priority: Int, private val function: (T) -> Unit) : Comparable<Listener<*>> {
+class Listener<T : Any>(
+    val event: Class<T>,
+    val priority: Int,
+    private val function: (T) -> Unit
+) : Comparable<Listener<*>> {
+
     private val id = listenerId++
 
     fun invoke(event: T) = function(event)
@@ -29,34 +32,23 @@ class Listener<T : Any>(val event: Class<T>, val priority: Int, private val func
 
     companion object {
         private var listenerId = Int.MIN_VALUE
-
-        /**
-         * Default priority for listeners
-         */
-        const val DEFAULT_PRIORITY = 0
-
-        /**
-         * Create and register a new listener for this object
-         *
-         * @param object the object of this listener belongs to
-         * @param T target event type
-         * @param event target event
-         * @param function action to perform when this listener gets called by the event bus
-         */
-        @JvmStatic
-        @JvmOverloads
-        @Deprecated("For Java use only", ReplaceWith("Any.register(this, Listener(event, function))", "me.zeroeightsix.kami.util.event.listener"))
-        fun <T : Any> listener(`object`: Any, event: Class<T>, priority: Int = DEFAULT_PRIORITY, function: (event: T) -> Unit) {
-            ListenerManager.register(`object`, Listener(event, priority, function))
-        }
     }
+
 }
+
+
+/**
+ * Default priority for listeners
+ */
+const val DEFAULT_PRIORITY = 0
+
 
 /**
  * Create and register a new listener for this object
  *
  * @param T target event
- * @param function action to perform when this listener gets called by the event bus
+ * @param priority Priority of this listener when calling by event bus
+ * @param function action to perform when this listener gets called by event bus
  */
 inline fun <reified T : Any> Any.listener(priority: Int = DEFAULT_PRIORITY, noinline function: (event: T) -> Unit) {
     ListenerManager.register(this, Listener(T::class.java, priority, function))
