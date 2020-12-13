@@ -1,4 +1,4 @@
-package org.kamiblue.event
+package org.kamiblue.event.eventbus
 
 import io.netty.util.internal.ConcurrentSet
 import me.zeroeightsix.kami.util.event.EventBus

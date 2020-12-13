@@ -1,8 +1,10 @@
-package org.kamiblue.event
+package org.kamiblue.event.eventbus
 
+import org.kamiblue.event.ListenerManager
 import org.kamiblue.event.listener.Listener
 
 abstract class AbstractEventBus : IEventBus {
+
     /**
      * A map for subscribed objects and their listeners
      *
@@ -23,7 +25,6 @@ abstract class AbstractEventBus : IEventBus {
     protected abstract val newSet: MutableSet<Listener<*>>
 
 
-    // Subscribing
     override fun subscribe(vararg objects: Any) {
         for (`object` in objects) subscribe(`object`)
     }
@@ -35,13 +36,11 @@ abstract class AbstractEventBus : IEventBus {
     override fun subscribe(`object`: Any) {
         ListenerManager.getListeners(`object`)?.let {
             subscribedObjects.getOrPut(`object`, ::newSet).addAll(it)
-            for (listener in it) subscribedListeners.getOrPut(listener.event, ::newSet).add(listener)
+            for (listener in it) subscribedListeners.getOrPut(listener.eventClass, ::newSet).add(listener)
         }
     }
-    // End of subscribing
 
 
-    // Unsubscribing
     override fun unsubscribe(objects: Iterable<Any>) {
         for (`object` in objects) unsubscribe(`object`)
     }
@@ -51,12 +50,10 @@ abstract class AbstractEventBus : IEventBus {
     }
 
     override fun unsubscribe(`object`: Any) {
-        subscribedObjects.remove(`object`)?.also { for (listener in it) subscribedListeners[listener.event]?.remove(listener) }
+        subscribedObjects.remove(`object`)?.also { for (listener in it) subscribedListeners[listener.eventClass]?.remove(listener) }
     }
-    // End of unsubscribing
 
 
-    // Event posting
     override fun post(vararg events: Any) {
         for (event in events) post(event)
     }
@@ -68,8 +65,8 @@ abstract class AbstractEventBus : IEventBus {
     override fun post(event: Any) {
         subscribedListeners[event.javaClass]?.let {
             @Suppress("UNCHECKED_CAST") // IDE meme
-            for (listener in it) (listener as Listener<Any>).invoke(event)
+            for (listener in it) (listener as Listener<Any>).function.invoke(event)
         }
     }
-    // End of event posting
+
 }

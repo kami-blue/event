@@ -1,10 +1,9 @@
-package org.kamiblue.event
+package org.kamiblue.event.eventbus
 
 /**
  * The basic Interface for an event bus
  */
 interface IEventBus {
-    // Subscribing
     /**
      * Subscribes all [objects]' listeners to this event bus
      */
@@ -19,10 +18,8 @@ interface IEventBus {
      * Subscribe an [object]'s listeners to this event bus
      */
     fun subscribe(`object`: Any)
-    // End of subscribing
 
 
-    // Unsubscribing
     /**
      * unsubscribes all [objects]' listeners from this event bus
      */
@@ -37,10 +34,8 @@ interface IEventBus {
      * unsubscribes an [object]'s listeners from this event bus
      */
     fun unsubscribe(`object`: Any)
-    // End of unsubscribing
 
 
-    // Event posting
     /**
      * Posts all events to this event bus, and calls
      * All the listeners of each event
@@ -58,5 +53,4 @@ interface IEventBus {
      * All the listeners of this event
      */
     fun post(event: Any)
-    // End of event posting
 }
