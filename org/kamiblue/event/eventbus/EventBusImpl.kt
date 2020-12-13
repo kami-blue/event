@@ -17,7 +17,7 @@ open class ConcurrentEventBus : AbstractEventBus() {
 /**
  * A concurrent implementation of [AbstractEventBus] and [IMultiEventBus]
  */
-open class MasterEventBus : ConcurrentEventBus(), IMultiEventBus {
+open class MultiEventBus : ConcurrentEventBus(), IMultiEventBus {
     private val subscribedEventBus = Collections.newSetFromMap<IEventBus>(ConcurrentHashMap())
 
     final override fun subscribe(eventBus: IEventBus) {
