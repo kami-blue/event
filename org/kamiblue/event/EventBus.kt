@@ -2,6 +2,7 @@ package org.kamiblue.event
 
 import io.netty.util.internal.ConcurrentSet
 import me.zeroeightsix.kami.util.event.EventBus
+import org.kamiblue.event.listener.Listener
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentSkipListSet

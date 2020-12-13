@@ -1,5 +1,7 @@
 package org.kamiblue.event
 
+import org.kamiblue.event.listener.Listener
+
 abstract class AbstractEventBus : IEventBus {
     /**
      * A map for subscribed objects and their listeners
