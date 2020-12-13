@@ -1,6 +1,7 @@
 package org.kamiblue.event.listener
 
 import org.kamiblue.event.ListenerManager
+import org.kamiblue.event.eventbus.IAsyncEventBus
 
 
 /**
@@ -10,6 +11,7 @@ const val DEFAULT_PRIORITY = 0
 
 /**
  * Create and register a new async listener for this object
+ * Must be used with Kotlinx Coroutine and a implementation of [IAsyncEventBus]
  *
  * @param T class of the target event
  * @param priority priority of this listener when calling by event bus
@@ -32,6 +34,7 @@ inline fun <reified T : Any> Any.listener(priority: Int = DEFAULT_PRIORITY, noin
 
 /**
  * Implementation of [AbstractListener] with suspend block
+ * Must be used with Kotlinx Coroutine and a implementation of [IAsyncEventBus]
  */
 class AsyncListener<T : Any>(
     override val eventClass: Class<T>,

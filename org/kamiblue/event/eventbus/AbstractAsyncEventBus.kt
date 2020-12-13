@@ -2,6 +2,10 @@ package org.kamiblue.event.eventbus
 
 import org.kamiblue.event.ListenerManager
 
+/**
+ * [IAsyncEventBus] with some basic implementation
+ * Must be used with Kotlinx Coroutine and overridden [post] method
+ */
 abstract class AbstractAsyncEventBus : AbstractEventBus(), IAsyncEventBus {
 
     override fun subscribe(`object`: Any) {

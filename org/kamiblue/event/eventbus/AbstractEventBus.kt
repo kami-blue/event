@@ -3,6 +3,9 @@ package org.kamiblue.event.eventbus
 import org.kamiblue.event.ListenerManager
 import org.kamiblue.event.listener.Listener
 
+/**
+ * [IEventBus] with some basic implementation
+ */
 abstract class AbstractEventBus : IEventBus {
 
     final override fun subscribe(vararg objects: Any) {
