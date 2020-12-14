@@ -17,8 +17,8 @@ const val DEFAULT_PRIORITY = 0
  * @param priority priority of this listener when calling by event bus
  * @param function action to perform when this listener gets called by event bus
  */
-inline fun <reified T : Any> Any.asyncListener(priority: Int = DEFAULT_PRIORITY, noinline function: suspend (T) -> Unit) {
-    ListenerManager.register(this, AsyncListener(T::class.java, priority, function))
+inline fun <reified T : Any> Any.asyncListener(noinline function: suspend (T) -> Unit) {
+    ListenerManager.register(this, AsyncListener(T::class.java, function))
 }
 
 /**
@@ -38,9 +38,10 @@ inline fun <reified T : Any> Any.listener(priority: Int = DEFAULT_PRIORITY, noin
  */
 class AsyncListener<T : Any>(
     override val eventClass: Class<T>,
-    override val priority: Int,
     override val function: suspend (T) -> Unit
-) : AbstractListener<T, suspend (T) -> Unit>()
+) : AbstractListener<T, suspend (T) -> Unit>() {
+    override val priority: Int = DEFAULT_PRIORITY
+}
 
 /**
  * Basic implementation of [AbstractListener]
