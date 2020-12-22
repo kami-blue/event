@@ -35,6 +35,14 @@ object ListenerManager {
     }
 
     /**
+     * Unregister all listeners of this object, this can not be undone
+     */
+    fun unregister(`object`: Any) {
+        listenerMap.remove(`object`)
+        asyncListenerMap.remove(`object`)
+    }
+
+    /**
      * Get all registered listeners of this [object]
      *
      * @param object object to get listeners
