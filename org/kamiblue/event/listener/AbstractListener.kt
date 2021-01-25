@@ -1,8 +1,16 @@
 package org.kamiblue.event.listener
 
-abstract class AbstractListener<E : Any, F> : IListener<E, F> {
+import org.kamiblue.commons.interfaces.Nameable
+import java.lang.ref.WeakReference
+import kotlin.reflect.KProperty
+
+abstract class AbstractListener<E : Any, F>(owner: Any) : IListener<E, F> {
 
     final override val id: Int = listenerId++
+    final override val owner: Any? by WeakReference(owner)
+    final override val ownerName: String = if (owner is Nameable) owner.name else owner.javaClass.simpleName
+
+    operator fun <T> WeakReference<T>.getValue(thisRef: Any?, property: KProperty<*>) = get()
 
     override fun compareTo(other: IListener<*, *>): Int {
         val result = priority - other.priority

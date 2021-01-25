@@ -3,6 +3,16 @@ package org.kamiblue.event.listener
 interface IListener<E : Any, F> : Comparable<IListener<*, *>> {
 
     /**
+     * Object of this listener belongs to
+     */
+    val owner: Any?
+
+    /**
+     * Name of the [owner]
+     */
+    val ownerName: String
+
+    /**
      * Class of the target event
      */
     val eventClass: Class<E>
