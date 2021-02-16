@@ -17,8 +17,10 @@ abstract class AbstractEventBus : IEventBus {
     }
 
     override fun subscribe(`object`: Any) {
+        if (subscribedObjects.containsKey(`object`)) return
+
         ListenerManager.getListeners(`object`)?.let {
-            subscribedObjects.getOrPut(`object`, ::newSet).addAll(it)
+            subscribedObjects[`object`] = it
             for (listener in it) subscribedListeners.getOrPut(listener.eventClass, ::newSet).add(listener)
         }
     }

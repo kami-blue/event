@@ -10,9 +10,9 @@ interface IEventBus {
     /**
      * A map for subscribed objects and their listeners
      *
-     * <SubscribedObject, Set<Listener>>
+     * <SubscribedObject, List<Listener>>
      */
-    val subscribedObjects: MutableMap<Any, MutableSet<Listener<*>>>
+    val subscribedObjects: MutableMap<Any, List<Listener<*>>>
 
     /**
      * A map for events and their subscribed listeners

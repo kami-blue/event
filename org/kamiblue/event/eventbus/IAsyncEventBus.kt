@@ -7,9 +7,9 @@ interface IAsyncEventBus : IEventBus {
     /**
      * A map for subscribed objects and their listeners
      *
-     * <SubscribedObject, Set<Listener>>
+     * <SubscribedObject, List<Listener>>
      */
-    val subscribedObjectsAsync: MutableMap<Any, MutableSet<AsyncListener<*>>>
+    val subscribedObjectsAsync: MutableMap<Any, List<AsyncListener<*>>>
 
     /**
      * A map for events and their subscribed listeners

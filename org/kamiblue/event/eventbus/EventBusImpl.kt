@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentSkipListSet
  * A concurrent implementation of [AbstractEventBus]
  */
 open class ConcurrentEventBus : AbstractEventBus() {
-    final override val subscribedObjects = ConcurrentHashMap<Any, MutableSet<Listener<*>>>()
+    final override val subscribedObjects = ConcurrentHashMap<Any, List<Listener<*>>>()
     final override val subscribedListeners = ConcurrentHashMap<Class<*>, MutableSet<Listener<*>>>()
     final override val newSet get() = ConcurrentSkipListSet<Listener<*>>(Comparator.reverseOrder())
 }

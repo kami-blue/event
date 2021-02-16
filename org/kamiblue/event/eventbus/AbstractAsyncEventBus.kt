@@ -9,9 +9,11 @@ import org.kamiblue.event.ListenerManager
 abstract class AbstractAsyncEventBus : AbstractEventBus(), IAsyncEventBus {
 
     override fun subscribe(`object`: Any) {
+        if (subscribedObjects.containsKey(`object`)) return
+
         super.subscribe(`object`)
         ListenerManager.getAsyncListeners(`object`)?.let {
-            subscribedObjectsAsync.getOrPut(`object`, ::newSetAsync).addAll(it)
+            subscribedObjectsAsync[`object`] = it
             for (listener in it) subscribedListenersAsync.getOrPut(listener.eventClass, ::newSetAsync).add(listener)
         }
     }
