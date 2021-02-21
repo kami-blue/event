@@ -14,7 +14,7 @@ abstract class AbstractListener<E : Any, F>(owner: Any) : IListener<E, F> {
     operator fun <T> WeakReference<T>.getValue(thisRef: Any?, property: KProperty<*>) = get()
 
     override fun compareTo(other: IListener<*, *>): Int {
-        val result = priority - other.priority
+        val result = priority.compareTo(other.priority)
         return if (result != 0) result
         else id.compareTo(other.id) // :monkey: code for getting around TreeSet duplicated check
     }
