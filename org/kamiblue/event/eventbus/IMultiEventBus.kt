@@ -9,7 +9,6 @@ interface IMultiEventBus : IEventBus {
      */
     fun subscribe(eventBus: IEventBus)
 
-
     /**
      * unsubscribes an [eventBus] from this event bus
      */

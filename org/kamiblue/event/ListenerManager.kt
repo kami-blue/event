@@ -17,47 +17,47 @@ object ListenerManager {
     /**
      * Register the [listener] to the [ListenerManager]
      *
-     * @param object object of the [listener] belongs to
+     * @param obj object of the [listener] belongs to
      * @param listener listener to register
      */
-    fun register(`object`: Any, listener: Listener<*>) {
-        listenerMap.getOrPut(`object`, ::CopyOnWriteArrayList).add(listener)
+    fun register(obj: Any, listener: Listener<*>) {
+        listenerMap.getOrPut(obj, ::CopyOnWriteArrayList).add(listener)
     }
 
     /**
      * Register the [asyncListener] to the [ListenerManager]
      *
-     * @param object object of the [asyncListener] belongs to
+     * @param obj object of the [asyncListener] belongs to
      * @param asyncListener async listener to register
      */
-    fun register(`object`: Any, asyncListener: AsyncListener<*>) {
-        asyncListenerMap.getOrPut(`object`, ::CopyOnWriteArrayList).add(asyncListener)
+    fun register(obj: Any, asyncListener: AsyncListener<*>) {
+        asyncListenerMap.getOrPut(obj, ::CopyOnWriteArrayList).add(asyncListener)
     }
 
     /**
      * Unregister all listeners of this object, this can not be undone
      */
-    fun unregister(`object`: Any) {
-        listenerMap.remove(`object`)
-        asyncListenerMap.remove(`object`)
+    fun unregister(obj: Any) {
+        listenerMap.remove(obj)
+        asyncListenerMap.remove(obj)
     }
 
     /**
-     * Get all registered listeners of this [object]
+     * Get all registered listeners of this [obj]
      *
-     * @param object object to get listeners
+     * @param obj object to get listeners
      *
-     * @return registered listeners of [object]
+     * @return registered listeners of [obj]
      */
-    fun getListeners(`object`: Any): List<Listener<*>>? = listenerMap[`object`]
+    fun getListeners(obj: Any): List<Listener<*>>? = listenerMap[obj]
 
     /**
-     * Get all registered async listeners of this [object]
+     * Get all registered async listeners of this [obj]
      *
-     * @param object object to get async listeners
+     * @param obj object to get async listeners
      *
-     * @return registered async listeners of [object]
+     * @return registered async listeners of [obj]
      */
-    fun getAsyncListeners(`object`: Any): List<AsyncListener<*>>? = asyncListenerMap[`object`]
+    fun getAsyncListeners(obj: Any): List<AsyncListener<*>>? = asyncListenerMap[obj]
 
 }

@@ -7,22 +7,19 @@ import org.kamiblue.event.ListenerManager
  * Must be used with Kotlinx Coroutine and overridden [post] method
  */
 abstract class AbstractAsyncEventBus : AbstractEventBus(), IAsyncEventBus {
+    override fun subscribe(objs: Any) {
+        super.subscribe(objs)
 
-    override fun subscribe(`object`: Any) {
-        if (subscribedObjects.containsKey(`object`)) return
-
-        super.subscribe(`object`)
-        ListenerManager.getAsyncListeners(`object`)?.let {
-            subscribedObjectsAsync[`object`] = it
-            for (listener in it) subscribedListenersAsync.getOrPut(listener.eventClass, ::newSetAsync).add(listener)
+        ListenerManager.getAsyncListeners(objs)?.forEach {
+            subscribedListenersAsync.getOrPut(it.eventClass, ::newSetAsync).add(it)
         }
     }
 
-    override fun unsubscribe(`object`: Any) {
-        super.unsubscribe(`object`)
-        subscribedObjectsAsync.remove(`object`)?.forEach {
+    override fun unsubscribe(objs: Any) {
+        super.unsubscribe(objs)
+
+        ListenerManager.getAsyncListeners(objs)?.forEach {
             subscribedListenersAsync[it.eventClass]?.remove(it)
         }
     }
-
 }
